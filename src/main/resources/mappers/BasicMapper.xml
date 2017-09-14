@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylx.librarymanage.dao.BasicMapper" >
+  <resultMap id="BaseResultMap" type="com.ylx.librarymanage.model.Basic" >
+    <constructor >
+      <idArg column="uid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="classic_index" jdbcType="SMALLINT" javaType="java.lang.Short" />
+      <arg column="inventory" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="borrowed_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="publication_year" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="publisher" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="price" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="trash" jdbcType="BIT" javaType="java.lang.Boolean" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    uid, id, name, classic_index, inventory, borrowed_number, publication_year, publisher, 
+    price, update_time, create_time, trash
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from basic_info
+    where uid = #{uid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from basic_info
+    where uid = #{uid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ylx.librarymanage.model.Basic" >
+    insert into basic_info (uid, id, name, 
+      classic_index, inventory, borrowed_number, 
+      publication_year, publisher, price, 
+      update_time, create_time, trash
+      )
+    values (#{uid,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{classicIndex,jdbcType=SMALLINT}, #{inventory,jdbcType=INTEGER}, #{borrowedNumber,jdbcType=INTEGER}, 
+      #{publicationYear,jdbcType=DATE}, #{publisher,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{trash,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylx.librarymanage.model.Basic" >
+    insert into basic_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="classicIndex != null" >
+        classic_index,
+      </if>
+      <if test="inventory != null" >
+        inventory,
+      </if>
+      <if test="borrowedNumber != null" >
+        borrowed_number,
+      </if>
+      <if test="publicationYear != null" >
+        publication_year,
+      </if>
+      <if test="publisher != null" >
+        publisher,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="trash != null" >
+        trash,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="classicIndex != null" >
+        #{classicIndex,jdbcType=SMALLINT},
+      </if>
+      <if test="inventory != null" >
+        #{inventory,jdbcType=INTEGER},
+      </if>
+      <if test="borrowedNumber != null" >
+        #{borrowedNumber,jdbcType=INTEGER},
+      </if>
+      <if test="publicationYear != null" >
+        #{publicationYear,jdbcType=DATE},
+      </if>
+      <if test="publisher != null" >
+        #{publisher,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="trash != null" >
+        #{trash,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylx.librarymanage.model.Basic" >
+    update basic_info
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="classicIndex != null" >
+        classic_index = #{classicIndex,jdbcType=SMALLINT},
+      </if>
+      <if test="inventory != null" >
+        inventory = #{inventory,jdbcType=INTEGER},
+      </if>
+      <if test="borrowedNumber != null" >
+        borrowed_number = #{borrowedNumber,jdbcType=INTEGER},
+      </if>
+      <if test="publicationYear != null" >
+        publication_year = #{publicationYear,jdbcType=DATE},
+      </if>
+      <if test="publisher != null" >
+        publisher = #{publisher,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="trash != null" >
+        trash = #{trash,jdbcType=BIT},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylx.librarymanage.model.Basic" >
+    update basic_info
+    set id = #{id,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      classic_index = #{classicIndex,jdbcType=SMALLINT},
+      inventory = #{inventory,jdbcType=INTEGER},
+      borrowed_number = #{borrowedNumber,jdbcType=INTEGER},
+      publication_year = #{publicationYear,jdbcType=DATE},
+      publisher = #{publisher,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      trash = #{trash,jdbcType=BIT}
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+</mapper>

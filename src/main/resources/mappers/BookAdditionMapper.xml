@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylx.librarymanage.dao.BookAdditionMapper" >
+  <resultMap id="BaseResultMap" type="com.ylx.librarymanage.model.BookAddition" >
+    <constructor >
+      <idArg column="uid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="ISBN" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="editor" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="page_count" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="letter_count" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="letter_price" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    uid, id, ISBN, editor, page_count, letter_count, letter_price, update_time, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from book_addition
+    where uid = #{uid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from book_addition
+    where uid = #{uid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ylx.librarymanage.model.BookAddition" >
+    insert into book_addition (uid, id, ISBN, 
+      editor, page_count, letter_count, 
+      letter_price, update_time, create_time
+      )
+    values (#{uid,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, #{isbn,jdbcType=VARCHAR}, 
+      #{editor,jdbcType=VARCHAR}, #{pageCount,jdbcType=INTEGER}, #{letterCount,jdbcType=BIGINT}, 
+      #{letterPrice,jdbcType=DOUBLE}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylx.librarymanage.model.BookAddition" >
+    insert into book_addition
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="isbn != null" >
+        ISBN,
+      </if>
+      <if test="editor != null" >
+        editor,
+      </if>
+      <if test="pageCount != null" >
+        page_count,
+      </if>
+      <if test="letterCount != null" >
+        letter_count,
+      </if>
+      <if test="letterPrice != null" >
+        letter_price,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="isbn != null" >
+        #{isbn,jdbcType=VARCHAR},
+      </if>
+      <if test="editor != null" >
+        #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="pageCount != null" >
+        #{pageCount,jdbcType=INTEGER},
+      </if>
+      <if test="letterCount != null" >
+        #{letterCount,jdbcType=BIGINT},
+      </if>
+      <if test="letterPrice != null" >
+        #{letterPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylx.librarymanage.model.BookAddition" >
+    update book_addition
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="isbn != null" >
+        ISBN = #{isbn,jdbcType=VARCHAR},
+      </if>
+      <if test="editor != null" >
+        editor = #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="pageCount != null" >
+        page_count = #{pageCount,jdbcType=INTEGER},
+      </if>
+      <if test="letterCount != null" >
+        letter_count = #{letterCount,jdbcType=BIGINT},
+      </if>
+      <if test="letterPrice != null" >
+        letter_price = #{letterPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylx.librarymanage.model.BookAddition" >
+    update book_addition
+    set id = #{id,jdbcType=INTEGER},
+      ISBN = #{isbn,jdbcType=VARCHAR},
+      editor = #{editor,jdbcType=VARCHAR},
+      page_count = #{pageCount,jdbcType=INTEGER},
+      letter_count = #{letterCount,jdbcType=BIGINT},
+      letter_price = #{letterPrice,jdbcType=DOUBLE},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+</mapper>

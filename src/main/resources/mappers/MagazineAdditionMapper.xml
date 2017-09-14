@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylx.librarymanage.dao.MagazineAdditionMapper" >
+  <resultMap id="BaseResultMap" type="com.ylx.librarymanage.model.MagazineAddition" >
+    <constructor >
+      <idArg column="uid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="ISSN" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ISD_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="subject" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="impact_factor" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="publishing_cycle" jdbcType="SMALLINT" javaType="java.lang.Short" />
+      <arg column="papers" jdbcType="SMALLINT" javaType="java.lang.Short" />
+      <arg column="average_paper_price" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    uid, id, ISSN, ISD_number, subject, impact_factor, publishing_cycle, papers, average_paper_price, 
+    update_time, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from magazine_addition
+    where uid = #{uid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from magazine_addition
+    where uid = #{uid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ylx.librarymanage.model.MagazineAddition" >
+    insert into magazine_addition (uid, id, ISSN, 
+      ISD_number, subject, impact_factor, 
+      publishing_cycle, papers, average_paper_price, 
+      update_time, create_time)
+    values (#{uid,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, #{issn,jdbcType=VARCHAR}, 
+      #{isdNumber,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR}, #{impactFactor,jdbcType=REAL}, 
+      #{publishingCycle,jdbcType=SMALLINT}, #{papers,jdbcType=SMALLINT}, #{averagePaperPrice,jdbcType=DOUBLE}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylx.librarymanage.model.MagazineAddition" >
+    insert into magazine_addition
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="issn != null" >
+        ISSN,
+      </if>
+      <if test="isdNumber != null" >
+        ISD_number,
+      </if>
+      <if test="subject != null" >
+        subject,
+      </if>
+      <if test="impactFactor != null" >
+        impact_factor,
+      </if>
+      <if test="publishingCycle != null" >
+        publishing_cycle,
+      </if>
+      <if test="papers != null" >
+        papers,
+      </if>
+      <if test="averagePaperPrice != null" >
+        average_paper_price,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="issn != null" >
+        #{issn,jdbcType=VARCHAR},
+      </if>
+      <if test="isdNumber != null" >
+        #{isdNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="subject != null" >
+        #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="impactFactor != null" >
+        #{impactFactor,jdbcType=REAL},
+      </if>
+      <if test="publishingCycle != null" >
+        #{publishingCycle,jdbcType=SMALLINT},
+      </if>
+      <if test="papers != null" >
+        #{papers,jdbcType=SMALLINT},
+      </if>
+      <if test="averagePaperPrice != null" >
+        #{averagePaperPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylx.librarymanage.model.MagazineAddition" >
+    update magazine_addition
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="issn != null" >
+        ISSN = #{issn,jdbcType=VARCHAR},
+      </if>
+      <if test="isdNumber != null" >
+        ISD_number = #{isdNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="subject != null" >
+        subject = #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="impactFactor != null" >
+        impact_factor = #{impactFactor,jdbcType=REAL},
+      </if>
+      <if test="publishingCycle != null" >
+        publishing_cycle = #{publishingCycle,jdbcType=SMALLINT},
+      </if>
+      <if test="papers != null" >
+        papers = #{papers,jdbcType=SMALLINT},
+      </if>
+      <if test="averagePaperPrice != null" >
+        average_paper_price = #{averagePaperPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylx.librarymanage.model.MagazineAddition" >
+    update magazine_addition
+    set id = #{id,jdbcType=INTEGER},
+      ISSN = #{issn,jdbcType=VARCHAR},
+      ISD_number = #{isdNumber,jdbcType=VARCHAR},
+      subject = #{subject,jdbcType=VARCHAR},
+      impact_factor = #{impactFactor,jdbcType=REAL},
+      publishing_cycle = #{publishingCycle,jdbcType=SMALLINT},
+      papers = #{papers,jdbcType=SMALLINT},
+      average_paper_price = #{averagePaperPrice,jdbcType=DOUBLE},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+</mapper>
