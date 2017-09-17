@@ -27,6 +27,13 @@
     delete from book_addition
     where uid = #{uid,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByPrimaryKeys" parameterType="java.util.List" >
+    delete from book_addition
+    where uid in
+    <foreach collection="list" item="uid" index="index" open="(" separator="," close=")" >
+      #{uid, jdbcType=INTEGER}
+    </foreach>
+  </delete>
   <insert id="insert" parameterType="com.ylx.librarymanage.model.BookAddition" >
     insert into book_addition (uid, id, ISBN, 
       editor, page_count, letter_count, 
@@ -34,7 +41,7 @@
       )
     values (#{uid,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, #{isbn,jdbcType=VARCHAR}, 
       #{editor,jdbcType=VARCHAR}, #{pageCount,jdbcType=INTEGER}, #{letterCount,jdbcType=BIGINT}, 
-      #{letterPrice,jdbcType=DOUBLE}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}
+      #{letterPrice,jdbcType=DOUBLE}, now(), now()
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ylx.librarymanage.model.BookAddition" >
@@ -58,12 +65,8 @@
       <if test="letterCount != null" >
         letter_count,
       </if>
-      <if test="letterPrice != null" >
         letter_price,
-      </if>
-      <if test="updateTime != null" >
         update_time,
-      </if>
       <if test="createTime != null" >
         create_time,
       </if>
@@ -87,12 +90,8 @@
       <if test="letterCount != null" >
         #{letterCount,jdbcType=BIGINT},
       </if>
-      <if test="letterPrice != null" >
-        #{letterPrice,jdbcType=DOUBLE},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
+        now(),
+        now(),
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -119,12 +118,7 @@
       <if test="letterPrice != null" >
         letter_price = #{letterPrice,jdbcType=DOUBLE},
       </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
+        update_time = now(),
     </set>
     where uid = #{uid,jdbcType=INTEGER}
   </update>
@@ -136,8 +130,7 @@
       page_count = #{pageCount,jdbcType=INTEGER},
       letter_count = #{letterCount,jdbcType=BIGINT},
       letter_price = #{letterPrice,jdbcType=DOUBLE},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+      update_time = now()
     where uid = #{uid,jdbcType=INTEGER}
   </update>
 </mapper>

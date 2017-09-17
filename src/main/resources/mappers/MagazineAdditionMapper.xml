@@ -30,6 +30,13 @@
     delete from magazine_addition
     where uid = #{uid,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByPrimaryKeys" parameterType="java.util.List" >
+    delete from magazine_addition
+    where uid in
+    <foreach collection="list" item="uid" index="index" open="(" separator="," close=")" >
+      #{uid, jdbcType=INTEGER}
+    </foreach>
+  </delete>
   <insert id="insert" parameterType="com.ylx.librarymanage.model.MagazineAddition" >
     insert into magazine_addition (uid, id, ISSN, 
       ISD_number, subject, impact_factor, 
@@ -38,7 +45,7 @@
     values (#{uid,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, #{issn,jdbcType=VARCHAR}, 
       #{isdNumber,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR}, #{impactFactor,jdbcType=REAL}, 
       #{publishingCycle,jdbcType=SMALLINT}, #{papers,jdbcType=SMALLINT}, #{averagePaperPrice,jdbcType=DOUBLE}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP})
+      now(), now())
   </insert>
   <insert id="insertSelective" parameterType="com.ylx.librarymanage.model.MagazineAddition" >
     insert into magazine_addition
@@ -70,12 +77,8 @@
       <if test="averagePaperPrice != null" >
         average_paper_price,
       </if>
-      <if test="updateTime != null" >
         update_time,
-      </if>
-      <if test="createTime != null" >
         create_time,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="uid != null" >
@@ -105,12 +108,8 @@
       <if test="averagePaperPrice != null" >
         #{averagePaperPrice,jdbcType=DOUBLE},
       </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
+        now(),
+        now(),
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.ylx.librarymanage.model.MagazineAddition" >
@@ -140,12 +139,7 @@
       <if test="averagePaperPrice != null" >
         average_paper_price = #{averagePaperPrice,jdbcType=DOUBLE},
       </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
+        update_time = now(),
     </set>
     where uid = #{uid,jdbcType=INTEGER}
   </update>
@@ -159,8 +153,7 @@
       publishing_cycle = #{publishingCycle,jdbcType=SMALLINT},
       papers = #{papers,jdbcType=SMALLINT},
       average_paper_price = #{averagePaperPrice,jdbcType=DOUBLE},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+      update_time = now()
     where uid = #{uid,jdbcType=INTEGER}
   </update>
 </mapper>

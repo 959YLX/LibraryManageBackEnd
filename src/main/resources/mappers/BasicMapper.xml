@@ -27,9 +27,25 @@
     from basic_info
     where uid = #{uid,jdbcType=INTEGER}
   </select>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.util.List">
+    select
+    <include refid="Base_Column_List" />
+    from basic_info
+    where id in
+      <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from basic_info
     where uid = #{uid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByPrimaryKeys" parameterType="java.util.List" >
+    delete from basic_info
+    where uid in
+      <foreach collection="list" item="uid" index="index" open="(" separator="," close=")" >
+        #{uid, jdbcType=INTEGER}
+      </foreach>
   </delete>
   <insert id="insert" parameterType="com.ylx.librarymanage.model.Basic" >
     insert into basic_info (uid, id, name, 
@@ -40,7 +56,7 @@
     values (#{uid,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
       #{classicIndex,jdbcType=SMALLINT}, #{inventory,jdbcType=INTEGER}, #{borrowedNumber,jdbcType=INTEGER}, 
       #{publicationYear,jdbcType=DATE}, #{publisher,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{trash,jdbcType=BIT}
+      now(), now(), #{trash,jdbcType=BIT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ylx.librarymanage.model.Basic" >
@@ -73,12 +89,8 @@
       <if test="price != null" >
         price,
       </if>
-      <if test="updateTime != null" >
         update_time,
-      </if>
-      <if test="createTime != null" >
         create_time,
-      </if>
       <if test="trash != null" >
         trash,
       </if>
@@ -111,12 +123,8 @@
       <if test="price != null" >
         #{price,jdbcType=DOUBLE},
       </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
+        now(),
+        now(),
       <if test="trash != null" >
         #{trash,jdbcType=BIT},
       </if>
@@ -149,12 +157,7 @@
       <if test="price != null" >
         price = #{price,jdbcType=DOUBLE},
       </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
+        update_time = now(),
       <if test="trash != null" >
         trash = #{trash,jdbcType=BIT},
       </if>
@@ -171,9 +174,16 @@
       publication_year = #{publicationYear,jdbcType=DATE},
       publisher = #{publisher,jdbcType=VARCHAR},
       price = #{price,jdbcType=DOUBLE},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = now(),
       trash = #{trash,jdbcType=BIT}
     where uid = #{uid,jdbcType=INTEGER}
+  </update>
+  <update id="updateTrashByPrimaryKeys" parameterType="java.util.List" >
+    update basic_info
+    set trash = true
+    where uid in
+      <foreach collection="list" item="uid" index="index" open="(" separator="," close=")" >
+        #{uid, jdbcType=INTEGER}
+      </foreach>
   </update>
 </mapper>

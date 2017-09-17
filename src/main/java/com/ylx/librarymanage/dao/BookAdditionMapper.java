@@ -2,6 +2,8 @@ package com.ylx.librarymanage.dao;
 
 import com.ylx.librarymanage.model.BookAddition;
 
+import java.util.List;
+
 public interface BookAdditionMapper {
     int deleteByPrimaryKey(Integer uid);
 
@@ -14,4 +16,6 @@ public interface BookAdditionMapper {
     int updateByPrimaryKeySelective(BookAddition record);
 
     int updateByPrimaryKey(BookAddition record);
+
+    int deleteByPrimaryKeys(List<Integer> uids);
 }
