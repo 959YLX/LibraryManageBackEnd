@@ -1,6 +1,7 @@
 package com.ylx.librarymanage.dao;
 
 import com.ylx.librarymanage.model.Basic;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,9 +18,21 @@ public interface BasicMapper {
 
     int updateByPrimaryKey(Basic record);
 
-    List<Basic> selectById(List<String> ids);
+    List<Basic> selectByIds(List<Integer> ids);
 
     int deleteByPrimaryKeys(List<Integer> uids);
 
-    int updateTrashByPrimaryKeys(List<Integer> uids);
+    int deleteByIds(List<Integer> ids);
+
+    int updateTrashByIds(List<Integer> id);
+
+//    List<Basic> selectAllNotInTrash();
+//
+//    List<Basic> selectAllInTrash();
+
+    List<Basic> selectAll(@Param("trash") Boolean trash);
+
+    int recoverByIds(List<Integer> ids);
+
+    List<Basic> selectByKeyword(SearchObject searchObject);
 }

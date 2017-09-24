@@ -6,5 +6,9 @@ public class Const {
     public static final String BOOK_TYPE = "book";
     public static final String MAGAZINE_TYPE = "magazine";
 
-    public static final String SPLIT_CHARACTER = "|";
+    public static final String SPLIT_CHARACTER = ",";
+
+    public static final int PAGE_SIZE = 10;
+
+    public static final String SEARCH_CHARACTER = "%";
 }

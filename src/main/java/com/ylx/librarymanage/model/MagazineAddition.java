@@ -25,6 +25,17 @@ public class MagazineAddition {
 
     private Date createTime;
 
+    public MagazineAddition(Integer id, String issn, String isdNumber, String subject, Float impactFactor, Short publishingCycle, Short papers, Double averagePaperPrice) {
+        this.id = id;
+        this.issn = issn;
+        this.isdNumber = isdNumber;
+        this.subject = subject;
+        this.impactFactor = impactFactor;
+        this.publishingCycle = publishingCycle;
+        this.papers = papers;
+        this.averagePaperPrice = averagePaperPrice;
+    }
+
     public MagazineAddition(Integer uid, Integer id, String issn, String isdNumber, String subject, Float impactFactor, Short publishingCycle, Short papers, Double averagePaperPrice, Date updateTime, Date createTime) {
         this.uid = uid;
         this.id = id;
@@ -40,7 +51,6 @@ public class MagazineAddition {
     }
 
     public MagazineAddition() {
-        super();
     }
 
     public Integer getUid() {

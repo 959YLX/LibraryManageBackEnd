@@ -7,11 +7,11 @@ import com.ylx.librarymanage.dao.MagazineAdditionMapper;
 import com.ylx.librarymanage.model.Basic;
 import com.ylx.librarymanage.response.ResponseCreator;
 import com.ylx.librarymanage.response.ResponseTemplate;
+import com.ylx.librarymanage.response.Results.DeleteResult;
 import com.ylx.librarymanage.service.DeleteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,34 +25,41 @@ public class DeleteServiceImpl implements DeleteService {
 
     @Override
     public ResponseTemplate deleteItems(String ids) {
-        List<Basic> items = basicMapper.selectById(Arrays.asList(ids.split(Const.SPLIT_CHARACTER)));
+        String[] idsStr = ids.split(Const.SPLIT_CHARACTER);
+        List<Integer> itemsId = new ArrayList<>();
+        for (String s:
+             idsStr) {
+            itemsId.add(Integer.valueOf(s));
+        }
+        List<Basic> items = basicMapper.selectByIds(itemsId);
         List<Integer> deleteList = new ArrayList<>();
         List<Integer> tagList = new ArrayList<>();
         for (Basic basic :
                 items) {
             if (basic.getTrash()){
-                deleteList.add(basic.getUid());
+                deleteList.add(basic.getId());
                 continue;
             }
-            tagList.add(basic.getUid());
+            tagList.add(basic.getId());
         }
         if (!deleteList.isEmpty()){
             delete(deleteList);
         }
         if (!tagList.isEmpty()){
-            moveToTrash(deleteList);
+            moveToTrash(tagList);
         }
-        return ResponseCreator.createDefaultSuccessResponse();
+        DeleteResult result = new DeleteResult(deleteList.size(), tagList.size());
+        return ResponseCreator.createSuccessResponseByData(result);
     }
 
     private void delete(List<Integer> list){
         basicMapper.deleteByPrimaryKeys(list);
-        bookAdditionMapper.deleteByPrimaryKeys(list);
-        magazineAdditionMapper.deleteByPrimaryKeys(list);
+        bookAdditionMapper.deleteByIds(list);
+        magazineAdditionMapper.deleteByIds(list);
     }
 
     private void moveToTrash(List<Integer> list){
-        basicMapper.updateTrashByPrimaryKeys(list);
+        basicMapper.updateTrashByIds(list);
     }
 
     @Autowired

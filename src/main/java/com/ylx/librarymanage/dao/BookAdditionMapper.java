@@ -13,9 +13,15 @@ public interface BookAdditionMapper {
 
     BookAddition selectByPrimaryKey(Integer uid);
 
+    BookAddition selectById(Integer id);
+
     int updateByPrimaryKeySelective(BookAddition record);
 
     int updateByPrimaryKey(BookAddition record);
 
     int deleteByPrimaryKeys(List<Integer> uids);
+
+    int deleteByIds(List<Integer> id);
+
+    List<BookAddition> selectByIds(List<Integer> id);
 }

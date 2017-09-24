@@ -13,9 +13,15 @@ public interface MagazineAdditionMapper {
 
     MagazineAddition selectByPrimaryKey(Integer uid);
 
+    MagazineAddition selectById(Integer id);
+
+    List<MagazineAddition> selectByIds(List<Integer> ids);
+
     int updateByPrimaryKeySelective(MagazineAddition record);
 
     int updateByPrimaryKey(MagazineAddition record);
 
     int deleteByPrimaryKeys(List<Integer> uids);
+
+    int deleteByIds(List<Integer> id);
 }

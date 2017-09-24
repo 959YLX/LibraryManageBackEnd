@@ -34,7 +34,15 @@ public class BookAddition {
     }
 
     public BookAddition() {
-        super();
+    }
+
+    public BookAddition(Integer id, String isbn, String editor, Integer pageCount, Long letterCount, Double letterPrice) {
+        this.id = id;
+        this.isbn = isbn;
+        this.editor = editor;
+        this.pageCount = pageCount;
+        this.letterCount = letterCount;
+        this.letterPrice = letterPrice;
     }
 
     public Integer getUid() {

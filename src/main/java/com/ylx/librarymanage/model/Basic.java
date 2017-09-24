@@ -7,6 +7,8 @@ public class Basic {
 
     private Integer id;
 
+    private Short type;
+
     private String name;
 
     private Short classicIndex;
@@ -27,9 +29,13 @@ public class Basic {
 
     private Boolean trash;
 
-    public Basic(Integer uid, Integer id, String name, Short classicIndex, Integer inventory, Integer borrowedNumber, Date publicationYear, String publisher, Double price, Date updateTime, Date createTime, Boolean trash) {
+    public Basic() {
+    }
+
+    public Basic(Integer uid, Integer id, Short type, String name, Short classicIndex, Integer inventory, Integer borrowedNumber, Date publicationYear, String publisher, Double price, Date updateTime, Date createTime, Boolean trash) {
         this.uid = uid;
         this.id = id;
+        this.type = type;
         this.name = name;
         this.classicIndex = classicIndex;
         this.inventory = inventory;
@@ -42,8 +48,16 @@ public class Basic {
         this.trash = trash;
     }
 
-    public Basic() {
-        super();
+    public Basic(Integer id, String name, Short classicIndex, Integer inventory, Integer borrowedNumber, Date publicationYear, String publisher, Double price, Boolean trash) {
+        this.id = id;
+        this.name = name;
+        this.classicIndex = classicIndex;
+        this.inventory = inventory;
+        this.borrowedNumber = borrowedNumber;
+        this.publicationYear = publicationYear;
+        this.publisher = publisher;
+        this.price = price;
+        this.trash = trash;
     }
 
     public Integer getUid() {
@@ -60,6 +74,14 @@ public class Basic {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Short getType() {
+        return type;
+    }
+
+    public void setType(Short type) {
+        this.type = type;
     }
 
     public String getName() {

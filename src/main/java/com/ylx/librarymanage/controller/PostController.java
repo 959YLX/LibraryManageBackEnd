@@ -1,14 +1,11 @@
 package com.ylx.librarymanage.controller;
 
-import com.ylx.librarymanage.common.Const;
 import com.ylx.librarymanage.controller.form.AddItemForm;
-import com.ylx.librarymanage.response.ErrorCode;
-import com.ylx.librarymanage.response.ResponseCreator;
 import com.ylx.librarymanage.response.ResponseTemplate;
 import com.ylx.librarymanage.service.AddService;
 import com.ylx.librarymanage.service.DeleteService;
+import com.ylx.librarymanage.service.RecoverService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,30 +15,21 @@ public class PostController {
 
     private AddService addService;
     private DeleteService deleteService;
+    private RecoverService recoverService;
 
     @PostMapping("/add")
     public ResponseTemplate addItem(AddItemForm addItemForm){
-        String type = addItemForm.getType();
-        if (StringUtils.isEmpty(type)){
-            return ResponseCreator.createErrorResponse(ErrorCode.ARGUMENT_ERROR);
-        }
-        ResponseTemplate response = null;
-        switch (type){
-            case Const.BOOK_TYPE: {
-                response = addService.addBooks(addItemForm.getObj());
-                break;
-            }
-            case Const.MAGAZINE_TYPE: {
-                response = addService.addMagazine(addItemForm.getObj());
-                break;
-            }
-        }
-        return response == null ? ResponseCreator.createErrorResponse(ErrorCode.SYSTEM_ERROR) : response;
+        return addService.addItem(addItemForm);
     }
 
+    @PostMapping("/delete")
+    public ResponseTemplate deleteItem(@RequestParam("ids") String ids){
+        return deleteService.deleteItems(ids);
+    }
 
-    public ResponseTemplate deleteItem(@RequestParam("id") String id){
-        return deleteService.deleteItems(id);
+    @PostMapping("/recover")
+    public ResponseTemplate recoverItem(@RequestParam("ids") String ids){
+        return recoverService.recover(ids);
     }
 
     @Autowired
@@ -52,5 +40,10 @@ public class PostController {
     @Autowired
     public void setDeleteService(DeleteService deleteService) {
         this.deleteService = deleteService;
+    }
+
+    @Autowired
+    public void setRecoverService(RecoverService recoverService) {
+        this.recoverService = recoverService;
     }
 }

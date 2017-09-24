@@ -26,6 +26,21 @@
     from magazine_addition
     where uid = #{uid,jdbcType=INTEGER}
   </select>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from magazine_addition
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByIds" resultMap="BaseResultMap" parameterType="list" >
+    select
+    <include refid="Base_Column_List" />
+    from magazine_addition
+    where id in
+    <foreach collection="list" item="id" index="index" open="(" separator="," close=")" >
+      #{id,jdbcType=INTEGER}
+    </foreach>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from magazine_addition
     where uid = #{uid,jdbcType=INTEGER}
@@ -35,6 +50,13 @@
     where uid in
     <foreach collection="list" item="uid" index="index" open="(" separator="," close=")" >
       #{uid, jdbcType=INTEGER}
+    </foreach>
+  </delete>
+  <delete id="deleteByIds" parameterType="java.util.List" >
+    delete from magazine_addition
+    where id in
+    <foreach collection="list" item="id" index="index" open="(" separator="," close=")" >
+      #{id, jdbcType=INTEGER}
     </foreach>
   </delete>
   <insert id="insert" parameterType="com.ylx.librarymanage.model.MagazineAddition" >
