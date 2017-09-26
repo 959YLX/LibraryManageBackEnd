@@ -9,13 +9,15 @@ public interface BookAdditionMapper {
 
     int insert(BookAddition record);
 
+    int insertList(List<BookAddition> list);
+
     int insertSelective(BookAddition record);
 
     BookAddition selectByPrimaryKey(Integer uid);
 
     BookAddition selectById(Integer id);
 
-    int updateByPrimaryKeySelective(BookAddition record);
+    int updateByIdSelective(BookAddition record);
 
     int updateByPrimaryKey(BookAddition record);
 

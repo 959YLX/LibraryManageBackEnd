@@ -6,7 +6,7 @@ public class BookAdditionVO {
 
     private String type = Const.BOOK_TYPE;
 
-    private String ISBN;
+    private String isbn;
 
     private String editor;
 
@@ -16,8 +16,8 @@ public class BookAdditionVO {
 
     private Double price;
 
-    public BookAdditionVO(String ISBN, String editor, Integer pages, Long letters, Double price) {
-        this.ISBN = ISBN;
+    public BookAdditionVO(String isbn, String editor, Integer pages, Long letters, Double price) {
+        this.isbn = isbn;
         this.editor = editor;
         this.pages = pages;
         this.letters = letters;
@@ -28,8 +28,8 @@ public class BookAdditionVO {
         return type;
     }
 
-    public String getISBN() {
-        return ISBN;
+    public String getIsbn() {
+        return isbn;
     }
 
     public String getEditor() {

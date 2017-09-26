@@ -10,11 +10,13 @@ public interface BasicMapper {
 
     int insert(Basic record);
 
+    int insertList(List<Basic> basics);
+
     int insertSelective(Basic record);
 
     Basic selectByPrimaryKey(Integer uid);
 
-    int updateByPrimaryKeySelective(Basic record);
+    int updateByIdSelective(Basic record);
 
     int updateByPrimaryKey(Basic record);
 
@@ -26,9 +28,7 @@ public interface BasicMapper {
 
     int updateTrashByIds(List<Integer> id);
 
-//    List<Basic> selectAllNotInTrash();
-//
-//    List<Basic> selectAllInTrash();
+    int hasBookById(Integer id);
 
     List<Basic> selectAll(@Param("trash") Boolean trash);
 

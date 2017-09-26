@@ -6,7 +6,7 @@ public class MagazineAdditionVO {
 
     private String type = Const.MAGAZINE_TYPE;
 
-    private String ISSN;
+    private String issn;
 
     private String index;
 
@@ -20,8 +20,8 @@ public class MagazineAdditionVO {
 
     private Double price;
 
-    public MagazineAdditionVO(String ISSN, String index, String subject, Float impactFactor, Short cycle, Short papers, Double price) {
-        this.ISSN = ISSN;
+    public MagazineAdditionVO(String issn, String index, String subject, Float impactFactor, Short cycle, Short papers, Double price) {
+        this.issn = issn;
         this.index = index;
         this.subject = subject;
         this.impactFactor = impactFactor;
@@ -34,8 +34,8 @@ public class MagazineAdditionVO {
         return type;
     }
 
-    public String getISSN() {
-        return ISSN;
+    public String getIssn() {
+        return issn;
     }
 
     public String getIndex() {

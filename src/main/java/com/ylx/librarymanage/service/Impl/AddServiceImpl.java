@@ -29,10 +29,11 @@ public class AddServiceImpl implements AddService {
     @Transactional
     public ResponseTemplate addItem(AddItemForm form) {
         String type = form.getType();
-        Basic basic = new Basic(form.getId(), form.getName(), form.getClassicIndex(), form.getInventory(), form.getBorrowedNumber(), form.getPublicationYear(), form.getPublisher(), form.getPrice(), false);
         if (StringUtils.isEmpty(type)){
             return ResponseCreator.createErrorResponse(ErrorCode.ARGUMENT_ERROR);
         }
+        Basic basic = new Basic(form.getId(), form.getName(), form.getClassicIndex(), form.getInventory(), form.getBorrowedNumber(), form.getPublicationYear(), form.getPublisher(), form.getPrice(), false);
+        basic.setType((short) (Const.BOOK_TYPE.equals(type) ? 0 : 1));
         ResponseTemplate responseTemplate;
         switch (type){
             case Const.BOOK_TYPE:{
@@ -51,20 +52,28 @@ public class AddServiceImpl implements AddService {
     }
 
     private ResponseTemplate addBook(Basic basic, AddItemForm form){
-        basic.setType((short) 0);
-        basicMapper.insert(basic);
         double preprice = 1000 * (basic.getPrice() / form.getLetterCount());
         BookAddition bookAddition = new BookAddition(basic.getId(), form.getISBN(), form.getEditor(), form.getPageCount(), form.getLetterCount(), preprice);
-        bookAdditionMapper.insert(bookAddition);
+        if (basicMapper.hasBookById(basic.getId()) > 0){
+            basicMapper.updateByIdSelective(basic);
+            bookAdditionMapper.updateByIdSelective(bookAddition);
+        }else {
+            basicMapper.insert(basic);
+            bookAdditionMapper.insert(bookAddition);
+        }
         return ResponseCreator.createDefaultSuccessResponse();
     }
 
     private ResponseTemplate addMagazine(Basic basic, AddItemForm form){
-        basic.setType((short) 1);
-        basicMapper.insert(basic);
         double preprice = basic.getPrice() / form.getPapers();
         MagazineAddition magazineAddition = new MagazineAddition(basic.getId(), form.getISSN(), form.getISDNumber(), form.getSubject(), form.getImpactFactor(), form.getPublishingCycle(), form.getPapers(), preprice);
-        magazineAdditionMapper.insert(magazineAddition);
+        if (basicMapper.hasBookById(basic.getId()) == 0){
+            basicMapper.insert(basic);
+            magazineAdditionMapper.insert(magazineAddition);
+        }else {
+            basicMapper.updateByIdSelective(basic);
+            magazineAdditionMapper.updateByIdSelective(magazineAddition);
+        }
         return ResponseCreator.createDefaultSuccessResponse();
     }
 

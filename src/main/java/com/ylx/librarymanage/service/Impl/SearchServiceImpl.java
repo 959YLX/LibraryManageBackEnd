@@ -22,7 +22,8 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public ResponseTemplate searchItems(SearchForm form) {
-        PageHelper.startPage(form.getPage(), Const.PAGE_SIZE);
+        Integer page = form.getPage() == null ? 1 : form.getPage();
+        PageHelper.startPage(page, Const.PAGE_SIZE);
         String keyword = Const.SEARCH_CHARACTER + form.getKeyword() + Const.SEARCH_CHARACTER;
         List<Basic> lists = basicMapper.selectByKeyword(new SearchObject(keyword, form.getTrash()));
         return listService.buildRequiredList(lists);

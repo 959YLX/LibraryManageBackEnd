@@ -5,7 +5,7 @@
     <constructor >
       <idArg column="uid" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="ISSN" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="issn" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="ISD_number" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="subject" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="impact_factor" jdbcType="REAL" javaType="java.lang.Float" />
@@ -17,7 +17,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    uid, id, ISSN, ISD_number, subject, impact_factor, publishing_cycle, papers, average_paper_price, 
+    uid, id, issn, ISD_number, subject, impact_factor, publishing_cycle, papers, average_paper_price,
     update_time, create_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -60,7 +60,7 @@
     </foreach>
   </delete>
   <insert id="insert" parameterType="com.ylx.librarymanage.model.MagazineAddition" >
-    insert into magazine_addition (uid, id, ISSN, 
+    insert into magazine_addition (uid, id, issn,
       ISD_number, subject, impact_factor, 
       publishing_cycle, papers, average_paper_price, 
       update_time, create_time)
@@ -68,6 +68,27 @@
       #{isdNumber,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR}, #{impactFactor,jdbcType=REAL}, 
       #{publishingCycle,jdbcType=SMALLINT}, #{papers,jdbcType=SMALLINT}, #{averagePaperPrice,jdbcType=DOUBLE}, 
       now(), now())
+  </insert>
+  <insert id="insertList" parameterType="java.util.List">
+    insert into magazine_addition (id, issn,
+      ISD_number, subject, impact_factor,
+      publishing_cycle, papers, average_paper_price,
+      update_time, create_time)
+    values
+    <foreach collection="list" item="magazine" index="index" separator="," >
+      (
+      #{magazine.id},
+      #{magazine.issn},
+      #{magazine.isdNumber},
+      #{magazine.subject},
+      #{magazine.impactFactor},
+      #{magazine.publishingCycle},
+      #{magazine.papers},
+      #{magazine.averagePaperPrice},
+      now(),
+      now()
+      )
+    </foreach>
   </insert>
   <insert id="insertSelective" parameterType="com.ylx.librarymanage.model.MagazineAddition" >
     insert into magazine_addition
@@ -79,7 +100,7 @@
         id,
       </if>
       <if test="issn != null" >
-        ISSN,
+        issn,
       </if>
       <if test="isdNumber != null" >
         ISD_number,
@@ -134,14 +155,14 @@
         now(),
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ylx.librarymanage.model.MagazineAddition" >
+  <update id="updateByIdSelective" parameterType="com.ylx.librarymanage.model.MagazineAddition" >
     update magazine_addition
     <set >
       <if test="id != null" >
         id = #{id,jdbcType=INTEGER},
       </if>
       <if test="issn != null" >
-        ISSN = #{issn,jdbcType=VARCHAR},
+        issn = #{issn,jdbcType=VARCHAR},
       </if>
       <if test="isdNumber != null" >
         ISD_number = #{isdNumber,jdbcType=VARCHAR},
@@ -163,12 +184,12 @@
       </if>
         update_time = now(),
     </set>
-    where uid = #{uid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ylx.librarymanage.model.MagazineAddition" >
     update magazine_addition
     set id = #{id,jdbcType=INTEGER},
-      ISSN = #{issn,jdbcType=VARCHAR},
+      issn = #{issn,jdbcType=VARCHAR},
       ISD_number = #{isdNumber,jdbcType=VARCHAR},
       subject = #{subject,jdbcType=VARCHAR},
       impact_factor = #{impactFactor,jdbcType=REAL},

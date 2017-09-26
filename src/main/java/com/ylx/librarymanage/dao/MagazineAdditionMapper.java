@@ -9,6 +9,8 @@ public interface MagazineAdditionMapper {
 
     int insert(MagazineAddition record);
 
+    int insertList(List<MagazineAddition> magazineAdditions);
+
     int insertSelective(MagazineAddition record);
 
     MagazineAddition selectByPrimaryKey(Integer uid);
@@ -17,7 +19,7 @@ public interface MagazineAdditionMapper {
 
     List<MagazineAddition> selectByIds(List<Integer> ids);
 
-    int updateByPrimaryKeySelective(MagazineAddition record);
+    int updateByIdSelective(MagazineAddition record);
 
     int updateByPrimaryKey(MagazineAddition record);
 

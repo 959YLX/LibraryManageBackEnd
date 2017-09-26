@@ -67,6 +67,29 @@
       now(), now(), #{trash,jdbcType=BIT}
       )
   </insert>
+  <insert id="insertList" parameterType="java.util.List">
+    insert into basic_info
+    (id, type, name, classic_index, inventory, borrowed_number,
+    publication_year, publisher, price,
+    update_time, create_time, trash)
+    values
+    <foreach collection="list" item="basic" index="index" separator=",">
+      (
+      #{basic.id},
+      #{basic.type},
+      #{basic.name},
+      #{basic.classicIndex},
+      #{basic.inventory},
+      #{basic.borrowedNumber},
+      #{basic.publicationYear},
+      #{basic.publisher},
+      #{basic.price},
+      now(),
+      now(),
+      #{basic.trash}
+      )
+    </foreach>
+  </insert>
   <insert id="insertSelective" parameterType="com.ylx.librarymanage.model.Basic" >
     insert into basic_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -144,14 +167,14 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ylx.librarymanage.model.Basic" >
+  <update id="updateByIdSelective" parameterType="com.ylx.librarymanage.model.Basic" >
     update basic_info
     <set >
       <if test="id != null" >
         id = #{id,jdbcType=INTEGER},
       </if>
       <if test="type != null" >
-        type = #{type,jdbc=TINYINT},
+        type = #{type,jdbcType=TINYINT},
       </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
@@ -179,7 +202,7 @@
         trash = #{trash,jdbcType=BIT},
       </if>
     </set>
-    where uid = #{uid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ylx.librarymanage.model.Basic" >
     update basic_info
@@ -217,6 +240,11 @@
     <include refid="Base_Column_List" />
     from basic_info
     where trash = #{trash}
+  </select>
+  <select id="hasBookById" parameterType="int" resultType="int">
+    select count(1)
+    from basic_info
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectByKeyword" parameterType="com.ylx.librarymanage.dao.SearchObject" resultMap="BaseResultMap" >
     select
