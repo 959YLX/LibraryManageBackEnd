@@ -70,6 +70,11 @@ public class ExportServiceImpl implements ExportService {
                         continue;
                     }
                     magazineAddition = magazineAdditionMapper.selectById(id);
+                    contain.add(Const.FORMATE.ISBN_LOCATION.ordinal(), null);
+                    contain.add(Const.FORMATE.EDITOR_LOCATION.ordinal(), null);
+                    contain.add(Const.FORMATE.PAGE_COUNT_LOCATION.ordinal(), null);
+                    contain.add(Const.FORMATE.LETTER_COUNT_LOCATION.ordinal(), null);
+                    contain.add(Const.FORMATE.LETTER_PRICE_LOCATION.ordinal(), null);
                     contain.add(Const.FORMATE.ISSN_LOCATION.ordinal(), magazineAddition.getIsdNumber());
                     contain.add(Const.FORMATE.ISD_NUMBER_LOCATION.ordinal(), magazineAddition.getIsdNumber());
                     contain.add(Const.FORMATE.SUBJECT_LOCATION.ordinal(), magazineAddition.getSubject());
